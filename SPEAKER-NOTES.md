@@ -103,9 +103,9 @@ aws rekognition get-face-detection \
 **Say:**
 > "Pre-trained models recognize celebrities like Brad Pitt, but NOT fictional characters. Watch what happens with a superhero..."
 
-### Passo 1: Mostrar S3 na Console
-- Abrir Console S3 > Bucket com imagens de treino
-- Mostrar estrutura de pastas: cada pasta = um label
+### Step 1: Show S3 in Console
+- Open S3 Console > Bucket with training images
+- Show folder structure: each folder = one label
   ```
   s3://my-training-bucket/
   ├── deadpool/
@@ -117,17 +117,17 @@ aws rekognition get-face-detection \
   ```
 
 **Say:**
-> "O nome da pasta define automaticamente o label. Simples assim."
+> "The folder name automatically defines the label. That simple."
 
-### Passo 2: Criar Projeto e Treinar (Console)
+### Step 2: Create Project and Train (Console)
 - Console > Rekognition > Custom Labels > Create Project
-- Apontar para o bucket S3
-- Iniciar treinamento
+- Point to the S3 bucket
+- Start training
 
-### Passo 3: Testar ANTES do modelo (durante treino)
+### Step 3: Test BEFORE the model (during training)
 
 **Say:**
-> "Enquanto o modelo treina, vamos ver o que o Rekognition padrão reconhece..."
+> "While the model trains, let's see what standard Rekognition recognizes..."
 
 **Run:**
 ```bash
@@ -136,12 +136,12 @@ aws rekognition detect-labels \
   --query 'Labels[].Name'
 ```
 
-**Result:** `["Person", "Costume", "Mask", "Human"]` - Genérico!
+**Result:** `["Person", "Costume", "Mask", "Human"]` - Generic!
 
-### Passo 4: Testar DEPOIS do modelo treinado
+### Step 4: Test AFTER the model is trained
 
 **Say:**
-> "Agora com nosso modelo custom..."
+> "Now with our custom model..."
 
 **Run:**
 ```bash
