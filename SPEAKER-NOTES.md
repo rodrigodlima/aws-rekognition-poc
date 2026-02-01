@@ -132,7 +132,7 @@ aws rekognition get-face-detection \
 **Run:**
 ```bash
 aws rekognition detect-labels \
-  --image '{"S3Object":{"Bucket":"my-bucket","Name":"deadpool.jpg"}}' \
+  --image '{"S3Object":{"Bucket":"rekognition-test-rodrigo-1768768123","Name":"RyuStreetFighterTwoHadoken.png"}}' \
   --query 'Labels[].Name'
 ```
 
@@ -147,7 +147,7 @@ aws rekognition detect-labels \
 ```bash
 aws rekognition detect-custom-labels \
   --project-version-arn "arn:aws:rekognition:...:project/heroes/version/1" \
-  --image '{"S3Object":{"Bucket":"my-bucket","Name":"deadpool.jpg"}}' \
+  --image '{"S3Object":{"Bucket":"rekognition-test-rodrigo-1768768123","Name":"RyuStreetFighterTwoHadoken.png"}}' \
   --query 'CustomLabels[].{Label:Name,Confidence:Confidence}'
 ```
 
@@ -159,11 +159,13 @@ aws rekognition detect-custom-labels \
 **Key API:** `DetectCustomLabels`
 
 ---
+### Step 5: Show vscode with image of Scarlet Johansson
+
 
 ## CLOSING (15 sec)
 
 **Say:**
-> "All pay-per-use, with a generous free tier. Questions?"
+> "Thats it today guys, thanks"
 
 ---
 
