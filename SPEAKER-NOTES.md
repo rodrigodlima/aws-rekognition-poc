@@ -38,7 +38,7 @@ aws rekognition detect-faces \
 **Run:**
 ```bash
 aws rekognition detect-protective-equipment \
-  --image '{"S3Object":{"Bucket":"my-bucket","Name":"worker.jpg"}}' \
+  --image '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"epi.jpeg"}}' \
   --query 'Persons[].BodyParts[].{Part:Name,Equipment:EquipmentDetections[].Type}'
 ```
 
