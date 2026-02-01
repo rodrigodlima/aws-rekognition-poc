@@ -5,7 +5,7 @@
 |------|-------|
 | 0:00 - 0:35 | Face Detection |
 | 0:35 - 1:10 | PPE Detection |
-| 1:10 - 1:45 | Video Stream |
+| 1:10 - 1:45 | Video Analysis |
 | 1:45 - 2:15 | Custom Labels |
 | 2:15 - 2:30 | Wrap up |
 
@@ -51,29 +51,49 @@ aws rekognition detect-protective-equipment \
 
 ---
 
-## 3. VIDEO STREAM (30 sec)
+## 3. VIDEO ANALYSIS (35 sec)
 
 **Say:**
-> "For real-time analysis, Rekognition integrates with Kinesis Video Streams to process live video feeds - perfect for security cameras."
+> "Rekognition also analyzes stored videos. It processes frame by frame, tracking emotions and attributes over time."
+
+### Step 1: Start video analysis (async)
 
 **Run:**
 ```bash
-# Create stream processor
-aws rekognition create-stream-processor \
-  --name "security-processor" \
-  --input '{"KinesisVideoStream":{"Arn":"arn:aws:kinesisvideo:..."}}' \
-  --output '{"KinesisDataStream":{"Arn":"arn:aws:kinesis:..."}}' \
-  --role-arn "arn:aws:iam::..." \
-  --settings '{"FaceSearch":{"CollectionId":"my-faces","FaceMatchThreshold":80}}'
-
-# Start processor
-aws rekognition start-stream-processor --name "security-processor"
+aws rekognition start-face-detection \
+  --video '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"meu-video.mp4"}}' \
+  --face-attributes ALL
 ```
 
-**Say:**
-> "Architecture: Kinesis Video > Rekognition > Lambda > Alert"
+**Point to:** JobId returned - this is async processing
 
-**Key Service:** `Kinesis Video Streams + StreamProcessor`
+### Step 2: Get results
+
+**Run:**
+```bash
+aws rekognition get-face-detection \
+  --job-id "JOB_ID_HERE" \
+  --query 'Faces[0:5].{Timestamp:Timestamp,Age:Face.AgeRange,Smile:Face.Smile.Value,Emotion:Face.Emotions[0].Type,Confidence:Face.Emotions[0].Confidence}'
+```
+
+**Expected output:**
+```json
+[
+  {"Timestamp": 0, "Age": {"Low": 42, "High": 50}, "Smile": false, "Emotion": "CALM", "Confidence": 99.0},
+  {"Timestamp": 2000, "Age": {"Low": 37, "High": 45}, "Smile": true, "Emotion": "HAPPY", "Confidence": 96.4},
+  {"Timestamp": 4000, "Age": {"Low": 41, "High": 49}, "Smile": false, "Emotion": "CONFUSED", "Confidence": 69.3}
+]
+```
+
+**Point to:**
+- Timestamp (milliseconds) - frame by frame analysis
+- Emotion changes over time (CALM → HAPPY → CONFUSED)
+- Consistent attribute detection (glasses, beard)
+
+**Say:**
+> "For live streaming, Rekognition integrates with Kinesis Video Streams using Stream Processors - same detection, real-time."
+
+**Key APIs:** `StartFaceDetection`, `GetFaceDetection`, `StartLabelDetection`
 
 ---
 
@@ -149,7 +169,7 @@ aws rekognition detect-custom-labels \
 ## CLI Reference
 
 ```bash
-# Face Detection
+# Face Detection (image)
 aws rekognition detect-faces --image '{"S3Object":{"Bucket":"BUCKET","Name":"FILE"}}'
 
 # PPE Detection
@@ -160,4 +180,12 @@ aws rekognition detect-labels --image '{"S3Object":{"Bucket":"BUCKET","Name":"FI
 
 # Custom Labels
 aws rekognition detect-custom-labels --project-version-arn "ARN" --image '{"S3Object":{"Bucket":"BUCKET","Name":"FILE"}}'
+
+# Video Analysis (async - returns JobId)
+aws rekognition start-face-detection --video '{"S3Object":{"Bucket":"BUCKET","Name":"VIDEO.mp4"}}' --face-attributes ALL
+aws rekognition get-face-detection --job-id "JOB_ID"
+
+# Other video analysis options
+aws rekognition start-label-detection --video '{"S3Object":{"Bucket":"BUCKET","Name":"VIDEO.mp4"}}'
+aws rekognition start-person-tracking --video '{"S3Object":{"Bucket":"BUCKET","Name":"VIDEO.mp4"}}'
 ```
