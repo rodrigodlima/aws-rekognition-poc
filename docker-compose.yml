@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  opencv-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile.opencv
+    container_name: opencv-face-detection
+    volumes:
+      - ./images:/app/images
+      - ./output:/app/output
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+    working_dir: /app
+    command: python opencv_demo.py images/sample.jpg
+    # To run interactively:
+    # docker-compose run opencv-demo python opencv_demo.py images/your-photo.jpg
