@@ -62,17 +62,18 @@ aws rekognition detect-protective-equipment \
 ```bash
 aws rekognition start-face-detection \
   --video '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"meu-video.mp4"}}' \
-  --face-attributes ALL
+  --face-attributes ALL \
+  --query 'JobId' --output text > /tmp/jobid.txt && cat /tmp/jobid.txt
 ```
 
-**Point to:** JobId returned - this is async processing
+**Point to:** JobId saved to file - this is async processing
 
 ### Step 2: Get results
 
 **Run:**
 ```bash
 aws rekognition get-face-detection \
-  --job-id "JOB_ID_HERE" \
+  --job-id "$(cat /tmp/jobid.txt)" \
   --query 'Faces[0:5].{Timestamp:Timestamp,Age:Face.AgeRange,Smile:Face.Smile.Value,Emotion:Face.Emotions[0].Type,Confidence:Face.Emotions[0].Confidence}'
 ```
 
