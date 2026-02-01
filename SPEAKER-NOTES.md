@@ -44,6 +44,9 @@ aws rekognition detect-protective-equipment \
 
 **Point to:** detected body parts and equipment (helmet, mask, gloves)
 
+**Limitation to mention:**
+> "Notice the gloves aren't detected here. When hands are holding objects - like safety glasses in this image - Rekognition can't identify the gloves because the hands are obscured. This is a common edge case to be aware of. For this, you will need to use custom labels and train the model"
+
 **Key API:** `DetectProtectiveEquipment`
 
 ---
