@@ -19,7 +19,7 @@
 **Run:**
 ```bash
 aws rekognition detect-faces \
-  --image '{"S3Object":{"Bucket":"my-bucket","Name":"face.jpg"}}' \
+  --image '{"S3Object":{"Bucket":"amzn-rekognition-poc","Name":"12161378.jpg"}}' \
   --attributes ALL \
   --query 'FaceDetails[0].{Emotions:Emotions[0],AgeRange:AgeRange,Smile:Smile}'
 ```
