@@ -155,7 +155,7 @@ aws rekognition detect-labels \
 **Run:**
 ```bash
 aws rekognition detect-custom-labels \
-  --project-version-arn "arn:aws:rekognition:us-east-1:688991925317:project/aws-rekognition-poc-v3/version/VERSION_AFTER_TRAIN" \
+  --project-version-arn "arn:aws:rekognition:us-east-1:688991925317:project/aws-rekognition-poc-v3/version/aws-rekognition-poc-v3.2026-02-01T23.36.31/1769999792026" \
   --image '{"S3Object":{"Bucket":"rekognition-test-rodrigo-1768768123","Name":"RyuStreetFighterTwoHadoken.png"}}' \
   --query 'CustomLabels[].{Label:Name,Confidence:Confidence}'
 ```
