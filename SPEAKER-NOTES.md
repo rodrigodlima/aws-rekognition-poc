@@ -106,12 +106,17 @@ aws rekognition get-face-detection \
 ### Step 1: Show S3 in Console
 - Open S3 Console > Bucket with training images
 - Show folder structure: each folder = one label
+  
+  Bucket URI:
   ```
-  s3://my-training-bucket/
+  s3://custom-labels-console-us-east-1-7c07b8e174/custom-labels/
+  ```
+  ```
+  s3://custom-labels-console-us-east-1-7c07b8e174/
   ├── deadpool/
   │   ├── img1.jpg
   │   └── img2.jpg
-  ├── spiderman/
+  ├── blanka/
   │   ├── img1.jpg
   │   └── img2.jpg
   ```
