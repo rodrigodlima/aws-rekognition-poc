@@ -61,9 +61,13 @@ aws rekognition detect-protective-equipment \
 **Run:**
 ```bash
 aws rekognition start-face-detection \
-  --video '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"meu-video.mp4"}}' \
+  --video '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"webcam_video.mp4"}}' \
   --face-attributes ALL \
   --query 'JobId' --output text > /tmp/jobid.txt && cat /tmp/jobid.txt
+```
+
+```bash
+aws rekognition get-face-detection --job-id "$(cat /tmp/jobid.txt)"
 ```
 
 **Point to:** JobId saved to file - this is async processing
@@ -109,11 +113,11 @@ aws rekognition get-face-detection \
   
   Bucket URI:
   ```
-  s3://custom-labels-console-us-east-1-7c07b8e174/custom-labels/
+  s3://custom-labels-console-us-east-1-7c07b8e174/streetfighter-custom-labels-training/
   ```
   ```
-  s3://custom-labels-console-us-east-1-7c07b8e174/
-  ├── deadpool/
+  s3://custom-labels-console-us-east-1-7c07b8e174/streetfighter-custom-labels-training
+  ├── ryu/
   │   ├── img1.jpg
   │   └── img2.jpg
   ├── blanka/
@@ -151,7 +155,7 @@ aws rekognition detect-labels \
 **Run:**
 ```bash
 aws rekognition detect-custom-labels \
-  --project-version-arn "arn:aws:rekognition:...:project/heroes/version/1" \
+  --project-version-arn "arn:aws:rekognition:us-east-1:688991925317:project/aws-rekognition-poc-v3/version/VERSION_AFTER_TRAIN" \
   --image '{"S3Object":{"Bucket":"rekognition-test-rodrigo-1768768123","Name":"RyuStreetFighterTwoHadoken.png"}}' \
   --query 'CustomLabels[].{Label:Name,Confidence:Confidence}'
 ```
