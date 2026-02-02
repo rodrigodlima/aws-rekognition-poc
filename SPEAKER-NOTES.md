@@ -184,7 +184,7 @@ aws rekognition detect-custom-labels \
 # Face Detection (image)
 aws rekognition detect-faces --image '{"S3Object":{"Bucket":"BUCKET","Name":"FILE"}}'
 
-# PPE Detection
+# PPE Detection (Personal Protective Equipment)
 aws rekognition detect-protective-equipment --image '{"S3Object":{"Bucket":"BUCKET","Name":"FILE"}}'
 
 # Label Detection (standard)
