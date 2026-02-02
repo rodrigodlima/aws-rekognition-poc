@@ -61,7 +61,7 @@ aws rekognition detect-protective-equipment \
 **Run:**
 ```bash
 aws rekognition start-face-detection \
-  --video '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"webcam_video.mp4"}}' \
+  --video '{"S3Object":{"Bucket":"amzn-rekognition-poc-v2","Name":"webcam_video_emotions.mp4"}}' \
   --face-attributes ALL \
   --query 'JobId' --output text > /tmp/jobid.txt && cat /tmp/jobid.txt
 ```
